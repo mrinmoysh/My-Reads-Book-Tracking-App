@@ -1,15 +1,44 @@
-import React from 'react';
-import CloseSearchButton from './CloseSearchButton';
-import SearchBooksInput from './SearchBooksInput';
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom';
 
-const SearchBar = props => {
-  const { onSearch, onResetSearch } = props;
-  return (
-    <div className="search-books-bar">
-      <CloseSearchButton onResetSearch={onResetSearch} />
-      <SearchBooksInput onSearch={onSearch} />
-    </div>
-  );
-};
 
-export default SearchBar;
+class SearchBar extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      value: '',
+    }
+  }
+
+  handleChange = event => {
+    const val = event.target.value;
+    this.setState({ value: val }, () => {
+      this.props.onSearch(val);
+    });
+  };
+
+  render() {
+    const { onResetSearch } = this.props;
+    return (
+      <div className="search-books-bar">
+        <Link to="/">
+          <button className="close-search" onClick={onResetSearch}>
+            Close
+      </button>
+        </Link>
+        <div className="search-books-input-wrapper">
+          <input
+            type="text"
+            value={this.state.value}
+            placeholder="Search by title or author"
+            onChange={this.handleChange}
+            autoFocus
+          />
+        </div>
+      </div>
+    )
+  }
+}
+
+export default SearchBar
+

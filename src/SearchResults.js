@@ -1,5 +1,5 @@
 import React from 'react';
-import Book from './Book';
+import BookshelfChanger from './BookshelfChanger';
 
 const SearchResults = props => {
   const { searchBooks, myBooks, onMove } = props;
@@ -17,12 +17,26 @@ const SearchResults = props => {
     <div className="search-books-results">
       <ol className="books-grid">
         {updatedBooks.map(book => (
-          <Book
-            key={book.id}
-            book={book}
-            shelf={book.shelf ? book.shelf : 'none'}
-            onMove={onMove}
-          />
+          <li>
+          <div className="book">
+            <div className="book-top">
+              <div
+                className="book-cover"
+                style={{
+                  width: 128,
+                  height: 193,
+                  backgroundImage: `url(${book.imageLinks &&
+                    book.imageLinks.thumbnail})`,
+                }}
+              />
+              <BookshelfChanger book={book} shelf={book.shelf ? book.shelf : 'none'} onMove={onMove} />
+            </div>
+            <div className="book-title">{book.title}</div>
+            <div className="book-authors">
+              {book.authors && book.authors.join(', ')}
+            </div>
+          </div>
+        </li>
         ))}
       </ol>
     </div>
@@ -30,3 +44,4 @@ const SearchResults = props => {
 };
 
 export default SearchResults;
+

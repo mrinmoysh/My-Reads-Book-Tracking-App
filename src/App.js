@@ -4,7 +4,7 @@ import { debounce } from 'throttle-debounce';
 import * as BooksAPI from './BooksAPI';
 import './App.css';
 // import getAll from './data';
-import ListBooks from './ListBooks';
+import BookLists from './BookLists';
 import SearchBooks from './SearchBooks';
 
 class BooksApp extends Component {
@@ -13,33 +13,32 @@ class BooksApp extends Component {
     { key: 'wantToRead', name: 'Want to Read' },
     { key: 'read', name: 'Read' },
   ];
-  state = {
-    myBooks: [],
-    searchBooks: [],
-  };
+  constructor(props) {
+    super(props)
+    this.state = {
+      myBooks: [],
+      searchBooks: [],
+    }
+  }
+
   componentDidMount = () => {
     BooksAPI.getAll().then(books => {
       this.setState({ myBooks: books });
     });
   };
   moveBook = (book, shelf) => {
-    // update db
     BooksAPI.update(book, shelf);
-    // BooksAPI.update(book, shelf).then(books => {
-    //   console.log(books);
-    // });
 
-    let updatedBooks = [];
-    updatedBooks = this.state.myBooks.filter(b => b.id !== book.id);
+    let uBooks = [];
+    uBooks = this.state.myBooks.filter(b => b.id !== book.id);
 
     if (shelf !== 'none') {
       book.shelf = shelf;
-      updatedBooks = updatedBooks.concat(book);
+      uBooks = uBooks.concat(book);
     }
 
-    // console.log('updated books len', updatedBooks.length);
     this.setState({
-      myBooks: updatedBooks,
+      myBooks: uBooks,
     });
   };
   searchForBooks = debounce(300, false, query => {
@@ -69,7 +68,7 @@ class BooksApp extends Component {
           exact
           path="/"
           render={() => (
-            <ListBooks
+            <BookLists
               bookshelves={this.bookshelves}
               books={myBooks}
               onMove={this.moveBook}

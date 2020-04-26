@@ -1,7 +1,8 @@
 import React from 'react';
 import BookshelfChanger from './BookshelfChanger';
+import PropTypes from 'prop-types';
 
-const Bookshelf = props => {
+const Bookshelf = (props) => {
   const { shelf, books, onMove } = props;
   const booksOnThisShelf = books.filter(book => book.shelf === shelf.key);
   // console.log('booksOnThisShelf', booksOnThisShelf);
@@ -11,8 +12,8 @@ const Bookshelf = props => {
       <h2 className="bookshelf-title" style={{alignSelf:"center"}}>{shelf.name}</h2>
       <div className="bookshelf-books">
         <ol className="books-grid">
-          {booksOnThisShelf.map(book => (
-            <li>
+          {booksOnThisShelf.map((book,index) => (
+            <li key={index}>
             <div className="book">
               <div className="book-top">
                 <div
@@ -37,6 +38,12 @@ const Bookshelf = props => {
       </div>
     </div>
   );
+};
+
+Bookshelf.propTypes = {
+  books: PropTypes.array,
+  shelf: PropTypes.object,
+  onMove: PropTypes.func
 };
 
 export default Bookshelf;

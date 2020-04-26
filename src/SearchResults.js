@@ -16,8 +16,8 @@ const SearchResults = props => {
   return (
     <div className="search-books-results">
       <ol className="books-grid">
-        {updatedBooks.map(book => (
-          <li>
+        {updatedBooks.map((book,index) => (
+          <li key={index}>
           <div className="book">
             <div className="book-top">
               <div

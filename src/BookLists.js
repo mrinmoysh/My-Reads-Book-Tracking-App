@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Bookshelf from './Bookshelf';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import PropTypes from 'prop-types';
 
 class BookLists extends Component {
   constructor(props) {
@@ -15,6 +15,7 @@ class BookLists extends Component {
   render() {
     const { bookshelves} = this.state;
     const {books, onMove} = this.props
+    console.log(this.props)
     return (
       <div className="list-books" style={{paddingBottom:'30px',justifyContent:"center"}}>
         <div className="list-books-title">
@@ -34,13 +35,19 @@ class BookLists extends Component {
       </div>
         <div style={{marginBottom:'30px',backgroundColor:"red"}}>
           <Link to="search">
-            <button type="button" class="btn btn-success" style={{alignSelf: 'flex-end',float:'right',marginRight:"30px"}} >Add a Book</button>
+            <button type="button" className="btn btn-success" style={{alignSelf: 'flex-end',float:'right',marginRight:"30px"}} >Add a Book</button>
           </Link>
         </div>
       </div>
     );
   }
 }
+
+BookLists.propTypes = {
+  books: PropTypes.array,
+  bookshelves: PropTypes.array,
+  onMove: PropTypes.func
+};
 
 export default BookLists;
 

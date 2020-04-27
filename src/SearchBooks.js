@@ -30,7 +30,7 @@ class SearchBooks extends Component {
     else this.setState({ queryStatus: true, allNewBooks: [] })
   }
   addBookSelf = (e, bookname) => {
-    console.log(e.target.value)
+    // console.log(e.target.value)
     let allBooks= this.state.allNewBooks
      const bookDetails= allBooks.filter(Books => Books.title === bookname);
       BooksAPI.update(bookDetails[0], e.target.value);

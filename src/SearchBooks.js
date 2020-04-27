@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 class SearchBooks extends Component {
   constructor(props) {
     super(props)
-
     this.state = {
       allNewBooks: [],
       query: '',
@@ -43,13 +42,12 @@ class SearchBooks extends Component {
 
   render() {
     const { query, allNewBooks, queryStatus } = this.state
+    // console.log(allNewBooks)
     return (
       <div className="search-book">
           <div className="search-books-bar">
-            
-            <Link to="/"><div className="close-search"></div></Link>
-            
-          
+            <Link to="/"><div className="close-search"></div>
+            </Link>
           <div className="search-books-input-wrapper">
             <input
               type="text"
@@ -66,7 +64,12 @@ class SearchBooks extends Component {
               <li key={index}>
                 <div className="book">
                   <div className="book-top">
-                    <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${element.imageLinks.thumbnail})` }}></div>
+                    <div className="book-cover" 
+                    style={{ width: 128, height: 193,
+                     backgroundImage: ((element.imageLinks && element.imageLinks.thumbnail)?`url(${element.imageLinks.thumbnail})`:"none")
+                      }}>
+
+                     </div>
                     <div className="book-shelf-changer">
                       <select  onChange={(e) => this.addBookSelf(e, `${element.title}`)} >
                         <option value="move" disabled>Move to...</option>
@@ -82,11 +85,8 @@ class SearchBooks extends Component {
                 </div>
               </li>
             )}
-
           </ol>
-
         </div>
-
       </div>
     )
   }
